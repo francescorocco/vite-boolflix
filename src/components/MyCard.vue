@@ -1,16 +1,12 @@
 <script>
-    import { store } from '../store.js';
-    import MyCard from 'src/components/MyCard.vue';
 
     export default {
         name: 'MyCard',
-        data() {
-            return {
-                store
-            }
-        },
-        components:{
-            MyCard
+        props:{
+            title: String,
+            fullTitle: String,
+            language: String,
+            votes: String
         }
     }
 </script>
@@ -18,14 +14,10 @@
 
 <template>
     <div class="container">
-        <ul>
-            <li v-for="(element,index) in store.filmList" :key="index">
-                <MyCard
-                :title="store.title"
-                :fullTitle="store.original_title"
-                />
-            </li>
-        </ul>
+        <h1>{{ fullTitle }}</h1>
+        <h3>{{ title }}</h3>
+        <h4>{{ language }}</h4>
+        <h4>{{ votes }}</h4>
     </div>
 </template>
 

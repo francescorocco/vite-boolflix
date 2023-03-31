@@ -22,6 +22,7 @@
         axios.get(list)
         .then(response => {
           this.store.filmList = response.data.results;
+          console.log(store.filmList)
         });
       }
     }
