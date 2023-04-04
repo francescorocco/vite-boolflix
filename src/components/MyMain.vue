@@ -29,5 +29,6 @@
 <style scoped lang="scss">
     main{
         background-color: black;
+        font-family: sans-serif;
     }
 </style>
