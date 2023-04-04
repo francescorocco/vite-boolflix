@@ -39,10 +39,17 @@
 </script>
 
 <template>
-  <MyHeader @SearchList = 'SearchList'/>
-  <MyMain/>
+  <div class="bg-color">
+    <MyHeader @SearchList = 'SearchList'/>
+    <MyMain/>
+  </div>
 </template>
 
 <style lang="scss">
-  @use "./styles/general.scss"
+  @use "./styles/general.scss";
+
+  .bg-color{
+    background-color: black;
+    height: 100vh;
+  }
 </style>

@@ -1,4 +1,5 @@
 <script>
+  import axios from 'axios';
 
 export default {
     name: 'MyCard',
@@ -6,13 +7,15 @@ export default {
         title: String,
         fullTitle: String,
         language: String,
-        votes: String,
+        votes: Number,
         imagePath: String,
+        id: Number,
+        listToGet: String
     },
     data() {
         return {
             imageSize: 'https://image.tmdb.org/t/p/w342',
-
+            actorsArray: [],
         }
     },
     methods: {
@@ -28,9 +31,21 @@ export default {
         transformVotes() {
             let wholeVote = Math.ceil(this.votes / 2);
             return wholeVote
+        },
+        getActors(){
+            let actors = `https://api.themoviedb.org/3/${this.listToGet}/${this.id}/credits?api_key=59b1e3e4e67251b916047195f5f0325e&language=it-IT`;
+            axios.get(actors)
+            .then(response =>{
+                console.log(response.data)
+                this.actorsArray= response.data.cast.slice(0, 5);
+            })
         }
+    },
+    mounted(){
+        this.getActors();
     }
 }
+
 </script>
 
 
@@ -41,20 +56,22 @@ export default {
         </div>
         <div class="card_content">
             <h1 class="card_title">{{ fullTitle }}</h1>
-            <h3 class="card_subtitle">{{ title }}</h3>
-            <h4 class="lang" :class="[(this.language == 'it') ? 'italy' : '', (this.language == 'en') ? 'english' : '']">
+            <h3 v-if="title != fullTitle" class="card_subtitle">{{ title }}</h3>
+            <h4 class="lang" :class="[(language == 'it') ? 'italy' : '', (language == 'en') ? 'english' : '']">
                 {{ language }}</h4>
             <p class="card_description">
-            <div class="votes">
-                Votes:
-                <i :class="(transformVotes() >= 1) ? 'fa-solid' : 'fa-regular'" class="fa-solid fa-star"></i>
-                <i :class="(transformVotes() >= 2) ? 'fa-solid' : 'fa-regular'" class="fa-regular fa-star"></i>
-                <i :class="(transformVotes() >= 3) ? 'fa-solid' : 'fa-regular'" class=" fa-star"></i>
-                <i :class="(transformVotes() >= 4) ? 'fa-solid' : 'fa-regular'" class=" fa-star"></i>
-                <i :class="(transformVotes() == 5) ? 'fa-solid' : 'fa-regular'" class=" fa-star"></i>
-            </div>
+                <div class="actors">
+                    <span v-for="(element,index) in actorsArray" :key="index">{{ element.name }} / </span>
+                </div>
+                <div class="votes">
+                    Votes:
+                    <i :class="(transformVotes() >= 1) ? 'fa-solid' : 'fa-regular'" class="fa-solid fa-star"></i>
+                    <i :class="(transformVotes() >= 2) ? 'fa-solid' : 'fa-regular'" class="fa-regular fa-star"></i>
+                    <i :class="(transformVotes() >= 3) ? 'fa-solid' : 'fa-regular'" class=" fa-star"></i>
+                    <i :class="(transformVotes() >= 4) ? 'fa-solid' : 'fa-regular'" class=" fa-star"></i>
+                    <i :class="(transformVotes() == 5) ? 'fa-solid' : 'fa-regular'" class=" fa-star"></i>
+                </div>
             </p>
-
         </div>
     </div>
 </template>
@@ -142,5 +159,9 @@ export default {
     img {
     max-width: 342px;
     height: 514px;
+    }
+
+    .votes{
+        padding-top: 10px;
     }
 </style>
