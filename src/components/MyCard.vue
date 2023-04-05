@@ -29,8 +29,7 @@ export default {
             return imageToPrint;
         },
         transformVotes() {
-            let wholeVote = Math.ceil(this.votes / 2);
-            return wholeVote
+            return Math.ceil(this.votes / 2);
         },
         getActors(){
             let actors = `https://api.themoviedb.org/3/${this.listToGet}/${this.id}/credits?api_key=59b1e3e4e67251b916047195f5f0325e&language=it-IT`;
@@ -65,11 +64,7 @@ export default {
                 </div>
                 <div class="votes">
                     Votes:
-                    <i :class="(transformVotes() >= 1) ? 'fa-solid' : 'fa-regular'" class="fa-solid fa-star"></i>
-                    <i :class="(transformVotes() >= 2) ? 'fa-solid' : 'fa-regular'" class="fa-regular fa-star"></i>
-                    <i :class="(transformVotes() >= 3) ? 'fa-solid' : 'fa-regular'" class=" fa-star"></i>
-                    <i :class="(transformVotes() >= 4) ? 'fa-solid' : 'fa-regular'" class=" fa-star"></i>
-                    <i :class="(transformVotes() == 5) ? 'fa-solid' : 'fa-regular'" class=" fa-star"></i>
+                    <i v-for="num in 5" :class="(num <= transformVotes()) ? 'fa-solid' : 'fa-regular'" :key="num" class=" fa-star"></i>
                 </div>
             </p>
         </div>

@@ -85,7 +85,6 @@
         color: #ff0000;
         padding: 30px 0 ;
         font-size: 35px;
-        font-family: sans-serif;
     }
 
     .type-of-element{
